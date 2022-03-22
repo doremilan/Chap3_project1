@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lan's Blog</title>
+    <link rel="stylesheet" href="/css/css.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        const quaryString = window.location.search; // 전체 URL중 쿼리스트링(파라미터)만 반환
+        console.log(quaryString)
+        const urlParams = new URLSearchParams(quaryString); // URL의 파라미터를 다룰 수 있는 객체인 URLSearchParams 객체로 변환
+        console.log(urlParams)
+        const articleId = urlParams.get("articleId"); // URL의 쿼리스트링에서 '파라미터명'으로 조회된 첫번째 값을 리턴
+        console.log(articleId)
+
+        $(document).ready(function () {
+            show_detail();
+        });
+
+        function show_detail() {
+            $.ajax({
+                type: "GET",
+                url: `/api/detail/${articleId}`, // 위에서 추출한 값 전달
+                data: {},
+                success: function (response) {
+                    let rows = response['detail']
+                    console.log(rows);
+
+                        let articleId = rows['articleId']
+                        let title = rows['title']
+                        let writer = rows['writer']
+                        let date = rows['date'].substring(0,11) //마지막 콤마는 지워줍니다.
+                        let content = rows['content']
+                        
+                        let temp_html = `<div class="title">
+                                                ${title}
+                                            </div>
+                                            <div class="info">
+                                                <dl>
+                                                    <dt>번호</dt>
+                                                    <dd>${articleId}</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>글쓴이</dt>
+                                                    <dd>${writer}</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>작성일</dt>
+                                                    <dd>${date}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="cont">
+                                                ${content}
+                                            </div>
+                        `
+                        $('#details').append(temp_html)
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>Lan's Blog</strong>
+            <p>게시판</p>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view" id="details">
+                
+            </div>
+            <div class="bt_wrap">
+                <a href="/" class="on">목록</a>
+                <button onclick='window.location.href = `/edit/?articleId=${articleId}`'>수정</button>  
+            </div>
+        </div>
+    </div>
+</body>
+</html>
