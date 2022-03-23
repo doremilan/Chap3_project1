@@ -11,12 +11,11 @@ const articlesSchema = mongoose.Schema({
         required: true,
     },
     title: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
     content: {
         type: String,
-        required: true,
     },
     password: {
         type: Number,

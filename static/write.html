@@ -18,7 +18,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/api/articles',
+                url: "/api/articles",
                 data: {
                     writer: writer, 
                     title: title,
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="bt_wrap">
-                <bu class="on" onclick="save_article()">등록</a>
+                <a class="on" onclick="save_article()">등록</a>
                 <a href="/">취소</a>
             </div>
         </div>

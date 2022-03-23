@@ -33,27 +33,26 @@
                         let title = rows['title']
                         let writer = rows['writer']
                         let content = rows['content']
-                        let password = rows['password']
                         
                         let temp_html = `<div class="board_write">
                                                     <div class="title">
                                                         <dl>
                                                             <dt>제목</dt>
-                                                            <dd><input type="text" placeholder="제목 입력" value=${title}></dd>
+                                                            <dd><input type="text" placeholder="제목 입력" id="title" value=${title}></dd>
                                                         </dl>
                                                     </div>
                                                     <div class="info">
                                                         <dl>
                                                             <dt>글쓴이</dt>
-                                                            <dd><input type="text" placeholder="글쓴이 입력" value=${writer}></dd>
+                                                            <dd><input type="text" placeholder="글쓴이 입력" id="writer" value=${writer}></dd>
                                                         </dl>
                                                         <dl>
                                                             <dt>비밀번호</dt>
-                                                            <dd><input type="password" placeholder="비밀번호 입력" value=""></dd>
+                                                            <dd><input type="password" placeholder="비밀번호 입력" id="password" value=""></dd>
                                                         </dl>
                                                     </div>
                                                     <div class="cont">
-                                                        <textarea placeholder="내용 입력">
+                                                        <textarea placeholder="내용 입력" id="content">
                                                                 ${content}</textarea>
                                                     </div>
                                                 </div>
@@ -63,31 +62,55 @@
             });
         }
 
-        // function edit_article() {
-        //     let writer = $('#writer').val()
-        //     let title = $('#title').val()
-        //     let password = $('#password').val()
-        //     let content = $('#content').val()
+        function edit_article() {
+            let writer = $('#writer').val()
+            let title = $('#title').val()
+            let password = $('#password').val()
+            let content = $('#content').val()
 
-        //     $.ajax({
-        //         type: 'PUT',
-        //         url: `/api/edit/${articleId}`,
-        //         data: {
-        //             writer: writer, 
-        //             title: title,
-        //             password: password,
-        //             content: content
-        //         },
-        //         if (password === )
-        //         success: function (response) {
-        //             alert(response['msg'])
-        //             window.location.href = '/'
-        //         },
-        //         error:function(request,status,error){
-        //                 alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-        //             }
-        //     });
-        // }
+            $.ajax({
+                type: 'PUT',
+                url: `/api/edit/${articleId}`,
+                data: {
+                    writer: writer, 
+                    title: title,
+                    password: password,
+                    content: content
+                },
+                
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.href = "/"
+                },
+                error:function (response, status, error) {
+                    console.log(response, status, error)
+                        alert(response.responseText);
+                    }
+            });
+        }
+
+
+        function delete_article() {
+
+            let password = $('#password').val()
+
+            $.ajax({
+                type: 'DELETE',
+                url: `/api/edit/${articleId}`,
+                data: {
+                    password: password,
+                },
+                
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.href = "/"
+                },
+                error:function (response, status, error) {
+                    console.log(response, status, error)
+                        alert(response.responseText);
+                    }
+            });
+        }
 
     </script>
 
@@ -99,10 +122,11 @@
             <p>게시판</p>
         </div>
         <div class="board_write_wrap" id="edit-box">
+            
         </div>
             <div class="bt_wrap">
-                <a href="/detail" class="on" onclick="edit_article()">수정완료</a>
-                <a href="/">삭제하기</a>
+                <a class="on" onclick="edit_article()">수정완료</a>
+                <a onclick="delete_article()">삭제하기</a>
             </div>
     </div>
 </body>

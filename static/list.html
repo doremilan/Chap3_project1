@@ -17,8 +17,8 @@
             $.ajax({
                 type: "GET",
                 url: "/api/articles",
-                data: {},
-                success: function (response) {
+                data: {}, 
+                success: function (response) { 
                     let rows = response['articles']
                     console.log(rows);
                     for (let i = rows.length-1; i > -1; i--) { //내림차순으로 반환해줍니다.
