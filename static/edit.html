@@ -83,8 +83,8 @@
                     window.location.href = "/"
                 },
                 error:function (response, status, error) {
-                    console.log(response, status, error)
-                        alert(response.responseText);
+                    console.log(response.responseJSON['msg'])
+                    alert(response.responseJSON['msg'])
                     }
             });
         }
@@ -106,8 +106,8 @@
                     window.location.href = "/"
                 },
                 error:function (response, status, error) {
-                    console.log(response, status, error)
-                        alert(response.responseText);
+                    console.log(response.responseJSON['msg'])
+                    alert(response.responseJSON['msg'])
                     }
             });
         }

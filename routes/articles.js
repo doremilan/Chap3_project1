@@ -77,7 +77,14 @@ router.delete("/edit/:articleId", async (req, res) => {
     const existArticle = await Articles.find({ articleId: Number(articleId), password: Number(password) });
 
     if (existArticle.length > 0) {
-      await Articles.deleteOne({ articleId });
+        await Articles.deleteOne({ articleId });
+        
+        const article_list = await Articles.find();
+        console.log(article_list['articleId'])
+
+        for (let i={ articleId }; i <= article_list.length; i++) {
+            article_list[i]['articleId'] -=1
+        }
     } else {
         return res.status(400).json({ 
             success: false, msg: "비밀번호가 일치하지 않습니다!" 
