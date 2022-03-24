@@ -78,18 +78,17 @@ router.delete("/edit/:articleId", async (req, res) => {
 
     if (existArticle.length > 0) {
         await Articles.deleteOne({ articleId });
-        
-        const article_list = await Articles.find();
-        console.log(article_list['articleId'])
-
-        for (let i={ articleId }; i <= article_list.length; i++) {
-            article_list[i]['articleId'] -=1
-        }
     } else {
         return res.status(400).json({ 
             success: false, msg: "비밀번호가 일치하지 않습니다!" 
         });
     }
+
+    // let article_list = await Articles.find();
+    // if (article_list.articleId > { articleId }) {
+    //     article_list.articleId -=1;
+    //     return console.log(article_list.articleId)
+    // }
 
     res.json({ 
         success: true, msg: "삭제 완료!" 
