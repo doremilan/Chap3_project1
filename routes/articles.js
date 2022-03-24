@@ -12,9 +12,9 @@ router.get("/articles", async (req, res) => {  //전체 목록을 반환합니�
 });
 
 
-router.get("/detail/:articleId", async (req, res) => { // 상세 정보를 반환합니다.
-    const { articleId } = req.params;
-    const [detail] = await Articles.find({ articleId: Number(articleId) })
+router.get("/detail/:_id", async (req, res) => { // 상세 정보를 반환합니다.
+    const { _id } = req.params;
+    const [detail] = await Articles.find({ _id: _id })
 
     res.json({
         detail,
@@ -29,10 +29,10 @@ router.post("/articles", async (req, res) => { //작성한 게시글을 저장�
     const { writer, title, password, content } = req.body;
     console.log({ writer, title, password, content });
 
-    const article_list = await Articles.find();
-    let articleId = article_list.length +1;
+    // const article_list = await Articles.find();
+    // let articleId = article_list.length +1;
 
-    const createdAtricle = await Articles.create({ articleId, writer, title, password, content, date });
+    const createdAtricle = await Articles.create({ writer, title, password, content, date });
 
     res.json({ 
         msg : "등록 완료!" 
@@ -40,9 +40,9 @@ router.post("/articles", async (req, res) => { //작성한 게시글을 저장�
 });
 
 
-router.get("/edit/:articleId", async (req, res) => { // 수정하기 정보를 반환합니다.
-    const { articleId } = req.params;
-    const [edit_detail] = await Articles.find({ articleId: Number(articleId) })
+router.get("/edit/:_id", async (req, res) => { // 수정하기 정보를 반환합니다.
+    const { _id } = req.params;
+    const [edit_detail] = await Articles.find({ _id: _id })
   
     res.json({
         edit_detail,
@@ -50,14 +50,14 @@ router.get("/edit/:articleId", async (req, res) => { // 수정하기 정보를 �
 });
 
 
-router.put("/edit/:articleId", async (req, res) => { //게시글을 수정합니다.
-    const { articleId } = req.params;
+router.put("/edit/:_id", async (req, res) => { //게시글을 수정합니다.
+    const { _id } = req.params;
     const { writer, title, password, content } = req.body;   
     
-    const existArticle = await Articles.find({ articleId: Number(articleId), password: Number(password) });  
+    const existArticle = await Articles.find({ _id: _id, password: Number(password) });  
 
     if (existArticle.length) {
-        await Articles.updateOne({ articleId: Number(articleId) }, { $set: { writer, title, content } });
+        await Articles.updateOne({ _id: _id }, { $set: { writer, title, content } });
     } else {
         return res.status(400).json({ 
             success: false, msg: "비밀번호가 일치하지 않습니다!" 
@@ -70,26 +70,20 @@ router.put("/edit/:articleId", async (req, res) => { //게시글을 수정합니
 });
 
 
-router.delete("/edit/:articleId", async (req, res) => {
-    const { articleId } = req.params;
+router.delete("/edit/:_id", async (req, res) => {
+    const { _id } = req.params;
     const { password } = req.body;
   
-    const existArticle = await Articles.find({ articleId: Number(articleId), password: Number(password) });
+    const existArticle = await Articles.find({ _id: _id, password: Number(password) });
 
     if (existArticle.length > 0) {
-        await Articles.deleteOne({ articleId });
+        await Articles.deleteOne({ _id });
     } else {
         return res.status(400).json({ 
             success: false, msg: "비밀번호가 일치하지 않습니다!" 
         });
     }
-
-    // let article_list = await Articles.find();
-    // if (article_list.articleId > { articleId }) {
-    //     article_list.articleId -=1;
-    //     return console.log(article_list.articleId)
-    // }
-
+    
     res.json({ 
         success: true, msg: "삭제 완료!" 
     });

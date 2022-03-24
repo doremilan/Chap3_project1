@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const articlesSchema = mongoose.Schema({
-    articleId: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
+    // articleId: {
+    //     type: Number,
+    //     required: true,
+    //     unique: true,
+    // },
     writer: {
         type: String,
         required: true,

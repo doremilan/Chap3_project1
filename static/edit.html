@@ -13,8 +13,8 @@
         console.log(quaryString)
         const urlParams = new URLSearchParams(quaryString); // URL의 파라미터를 다룰 수 있는 객체인 URLSearchParams 객체로 변환
         console.log(urlParams)
-        const articleId = urlParams.get("articleId"); // URL의 쿼리스트링에서 '파라미터명'으로 조회된 첫번째 값을 리턴
-        console.log(articleId)
+        const _id = urlParams.get("_id"); // URL의 쿼리스트링에서 '파라미터명'으로 조회된 첫번째 값을 리턴
+        console.log(_id)
 
         $(document).ready(function () {
             show_contents();
@@ -23,13 +23,13 @@
         function show_contents() {
             $.ajax({
                 type: "GET",
-                url: `/api/edit/${articleId}`, // 위에서 추출한 값 전달 
+                url: `/api/edit/${_id}`, // 위에서 추출한 값 전달 
                 data: {},
                 success: function (response) {
                     let rows = response['edit_detail']
                     console.log(rows);
 
-                        let articleId = rows['articleId']
+                        // let articleId = rows['articleId']
                         let title = rows['title']
                         let writer = rows['writer']
                         let content = rows['content']
@@ -70,7 +70,7 @@
 
             $.ajax({
                 type: 'PUT',
-                url: `/api/edit/${articleId}`,
+                url: `/api/edit/${_id}`,
                 data: {
                     writer: writer, 
                     title: title,
@@ -96,7 +96,7 @@
 
             $.ajax({
                 type: 'DELETE',
-                url: `/api/edit/${articleId}`,
+                url: `/api/edit/${_id}`,
                 data: {
                     password: password,
                 },

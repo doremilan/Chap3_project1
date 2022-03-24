@@ -22,14 +22,15 @@
                     let rows = response['articles']
                     console.log(rows);
                     for (let i = rows.length-1; i > -1; i--) { //내림차순으로 반환해줍니다.
-                        let articleId = rows[i]['articleId']
+                        let _id = rows[i]['_id']
                         let title = rows[i]['title']
                         let writer = rows[i]['writer']
                         let date = rows[i]['date'].substring(0,11) //끝에 콤마를 지워줍니다.
+                        let num = i +1
                         
                         let temp_html = `<div>
-                                            <div class="num">${articleId}</div>
-                                            <div class="title"><a href="/detail/?articleId=${articleId}">${title}</a></div>
+                                            <div class="num">${num}</div>
+                                            <div class="title"><a href="/detail/?_id=${_id}">${title}</a></div>
                                             <div class="writer">${writer}</div>
                                             <div class="date">${date}</div>
                                         </div>

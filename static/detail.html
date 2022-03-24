@@ -12,8 +12,8 @@
         console.log(quaryString)
         const urlParams = new URLSearchParams(quaryString); // URL의 파라미터를 다룰 수 있는 객체인 URLSearchParams 객체로 변환
         console.log(urlParams)
-        const articleId = urlParams.get("articleId"); // URL의 쿼리스트링에서 '파라미터명'으로 조회된 첫번째 값을 리턴
-        console.log(articleId)
+        const _id = urlParams.get("_id"); // URL의 쿼리스트링에서 '파라미터명'으로 조회된 첫번째 값을 리턴
+        console.log(_id)
 
         $(document).ready(function () {
             show_detail();
@@ -22,13 +22,13 @@
         function show_detail() {
             $.ajax({
                 type: "GET",
-                url: `/api/detail/${articleId}`, // 위에서 추출한 값 전달
+                url: `/api/detail/${_id}`, // 위에서 추출한 값 전달
                 data: {},
                 success: function (response) {
                     let rows = response['detail']
                     console.log(rows);
 
-                        let articleId = rows['articleId']
+                        // let articleId = rows['articleId']
                         let title = rows['title']
                         let writer = rows['writer']
                         let date = rows['date'].substring(0,11) //마지막 콤마는 지워줍니다.
@@ -38,10 +38,6 @@
                                                 ${title}
                                             </div>
                                             <div class="info">
-                                                <dl>
-                                                    <dt>번호</dt>
-                                                    <dd>${articleId}</dd>
-                                                </dl>
                                                 <dl>
                                                     <dt>글쓴이</dt>
                                                     <dd>${writer}</dd>
@@ -75,7 +71,7 @@
             </div>
             <div class="bt_wrap">
                 <a href="/" class="on">목록</a>
-                <a onclick="window.location.href = `/edit/?articleId=${articleId}`">수정</a>  
+                <a onclick="window.location.href = `/edit/?_id=${_id}`">수정</a>  
             </div>
         </div>
     </div>
